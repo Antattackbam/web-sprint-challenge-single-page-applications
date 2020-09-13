@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-const Form  = props => {
+const Form = (props) => {
     const {
         values,
         onInputChange,
@@ -8,15 +8,17 @@ const Form  = props => {
         onSubmit,
         errors,
         disabled,
-    } = props;
+    } = props
 
-    return ( 
-    <>
-    <h2>Build Your Own Pizza</h2>
+    return (
+        <>
+            <h2>Build Your Own Pizza</h2>
             <form onSubmit={onSubmit}>
+                <h3>Bulid Your Own Pizza</h3>
                 <label>Name:&nbsp;
                     <input
                         type='text'
+                        data-cy='name-input'
                         placeholder='name'
                         maxLength='30'
                         name='first_name'
@@ -25,7 +27,7 @@ const Form  = props => {
                     />
                 </label>  
                 <label>Size:&nbsp;
-                    <select name='size' value={values.size} onChange={onInputChange}>
+                    <select name='size' data-cy='size' value={values.size} onChange={onInputChange}>
                         <option value=''> Select a Size</option>
                         <option value='Small'>Small</option>
                         <option value='Medium'>Medium</option>
@@ -37,6 +39,7 @@ const Form  = props => {
                         <input
                             type='checkbox'
                             name='pepperoni'
+                            data-cy='pepp'
                             checked={values.toppings.pepperoni}
                             onChange={onCheckboxChange}
                         />
@@ -44,6 +47,7 @@ const Form  = props => {
                     <label>Chicken&nbsp;
                         <input
                             type='checkbox'
+                            data-cy='chick'
                             name='chicken'
                             checked={values.toppings.chicken}
                             onChange={onCheckboxChange}
@@ -60,6 +64,7 @@ const Form  = props => {
                     <label>Tomatoes&nbsp;
                         <input
                             type='checkbox'
+                            data-cy='tom'
                             name='tomatoes'
                             checked={values.toppings.tomatoes}
                             onChange={onCheckboxChange}
@@ -69,6 +74,7 @@ const Form  = props => {
                 <label>Special Instructions:&nbsp;
                     <input
                         type='text'
+                        data-cy='instructions'
                         placeholder='instructions'
                         maxLength='200'
                         name='instructions'
@@ -77,10 +83,10 @@ const Form  = props => {
                     />
                 </label> 
                 <div className='errors'>{errors.first_name}</div>
-                <button disabled={disabled} className='submit' >Submit</button>
+                <button disabled={disabled} data-cy='submit' className='submit' >Submit</button>
             </form>
-    </>
+        </>
 
-)
+    )
 }
 export default Form
