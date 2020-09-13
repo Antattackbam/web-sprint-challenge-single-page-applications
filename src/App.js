@@ -4,6 +4,7 @@ import Home from './component/Home';
 import formSchema from './component/formSchema';
 import {Route, Switch, Link} from 'react-router-dom';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const initialFormValues = {
   first_name: '',
@@ -30,9 +31,23 @@ const initialDisabled = true;
 
 const App = () => {
 
+  const [orders, setOrders] = useState([])
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(initialDisabled);
+
+  const postNewOrder = newOrder => {
+    axios.post ('https://reqres.in/api/users', newOrder)
+    .then(res => {
+      setOrders([...orders, res.data])
+    })
+    .catch(err => {
+      console.log('order is invalid')
+    })
+    .finally(() => {
+      setFormValues(initialFormValues)
+    })
+  }
 
   const onInputChange = event => {
     const name = event.target.name
@@ -71,7 +86,17 @@ const App = () => {
     })
   }
   const onSubmit = event => {
-    event.preventDefault()
+    event.preventDefault();
+
+    const newOrder = {
+      first_name: formValues.first_name.trim(),
+      size: formValues.size,
+      toppings: Object.keys(formValues.toppings)
+      .filter(toppings => formValues.toppings[toppings] === true),
+      instructions: formValues.instructions.trim()
+    }
+    postNewOrder(newOrder)
+    console.log(newOrder)
   };
 
     useEffect(() =>{
@@ -102,6 +127,18 @@ const App = () => {
         <Home />
       </Route>
     </Switch>
+    {
+      orders.map(order =>{
+        return (
+          <div key={order.id} className='order container'>
+            <h4>{order.first_name} your order has been received</h4>
+            <h5>{order.size}</h5>
+            <h5>{order.toppings}</h5>
+            <h5>{order.instructions}</h5>
+          </div>
+        )
+      })
+    }
     </>
 
   );
