@@ -6,7 +6,6 @@ const Form  = props => {
     <>
     <h2>Build Your Own Pizza</h2>
         <form >
-            <h3>Bulid Your Own Pizza</h3>
             <label>Name:&nbsp;
                 <input
                     type='text'
